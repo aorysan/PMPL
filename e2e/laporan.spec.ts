@@ -2,7 +2,7 @@
 import { test, expect } from '@playwright/test';
 
 
-test('Membuat laporan kerusakan', async ({ page }) => {
+test('TC_BUAT_001 - Membuat laporan kerusakan', async ({ page }) => {
   // Langkah 1: Buka halaman login (jika belum login)
   await page.goto('https://sipasti.rakaiseto.com/login');
 
@@ -50,7 +50,7 @@ test('Membuat laporan kerusakan', async ({ page }) => {
   await expect(page).toHaveURL('https://sipasti.rakaiseto.com/civitas');
 });
 
-test('Cek detail laporan kerusakan', async ({ page }) => {
+test('TC-CV-004 - Cek detail laporan kerusakan', async ({ page }) => {
   // Langkah 1: Buka halaman login (jika belum login)
   await page.goto('https://sipasti.rakaiseto.com/login ');
 
@@ -64,12 +64,12 @@ test('Cek detail laporan kerusakan', async ({ page }) => {
 
   // Langkah 4: Isi formulir pencarian
   await page.locator('#searchInput').fill('AC');
+  await page.keyboard.press('Enter'); // Submit the search
 
   // Langkah 5: Verifikasi hasil pencarian
-  const searchResult = await page.locator('table', { hasText: 'AC' }); // Define and locate the search result
+  const searchResult = await page.locator('table', { hasText: 'AC' });
   await expect(searchResult).toBeVisible({ timeout: 10000 });
 
-  // Langkah 6: Klik pada laporan untuk melihat detail
   // Langkah 6: Klik pada laporan untuk melihat detail
   await searchResult.locator('tr').filter({ hasText: 'AC' }).first().getByRole('button', { name: 'Detail' }).click();
 });
